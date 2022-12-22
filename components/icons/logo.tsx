@@ -2,7 +2,7 @@ import * as React from 'react'
 
 export interface ILogo {
   colorClass: string
-  width: number
+  width?: number
 }
 
 export const Logo: React.FC<ILogo> = ({ colorClass, width }) => {

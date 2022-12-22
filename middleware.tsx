@@ -1,47 +1,95 @@
+import { NextURL } from 'next/dist/server/web/next-url'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
+const locales = ['es', 'en']
+const defaultLang = 'es'
+export const validRoutes = [
+  '/es/login',
+  '/en/login',
+  '/es/register',
+  '/en/register'
+]
+
 export function middleware (request: NextRequest) {
-  const locales = ['es', 'en']
-  const defaultLang = 'es'
-  const { headers, nextUrl } = request
+  const { nextUrl, url } = request
 
-  // Exclude statics - add your static folders
-  const shouldCheckLocale =
-    !nextUrl.pathname.startsWith('/_next') &&
-    !nextUrl.pathname.startsWith('/favicon')
-  // && !nextUrl.pathname.startsWith("/images/");
-  const reqLocale = nextUrl.pathname.split('/')[1]
-  const noValidLocale = !locales.includes(reqLocale)
-  const isNotSavedLang = request.cookies.get('lang')?.value === undefined
+  const hasToRedirctLang = HasRedirectLang(request)
+  const shouldCheck = ShouldCheck(nextUrl)
+  const lang = getLang(request)
+  const isValidToken = IsValidToken(request)
+  const isSomeValidRoute = validRoutes.some(
+    (route) => route === nextUrl.pathname
+  )
 
-  if (shouldCheckLocale && noValidLocale && isNotSavedLang) {
-    // TODO: check from cookie before detecting
-    const accepts = headers.get('accept-language') || ''
-    // Omit country for now
-    const detected = accepts.split(',')[0].split('-')[0]
+  const tokenUrl = GenerateTokenUrl(lang, isValidToken, isSomeValidRoute)
 
-    const validLocale = locales.includes(detected) ? detected : defaultLang
+  if (tokenUrl !== null && hasToRedirctLang) {
+    const res = NextResponse.redirect(new URL(`/${lang}/login`, url))
 
-    nextUrl.pathname = `${nextUrl.pathname}`
-    const res = NextResponse.redirect(
-      new URL(`/${validLocale}${nextUrl.pathname}`, request.url)
-    )
-    res.cookies.set('lang', validLocale ?? 'en')
-
+    res.cookies.set('lang', lang ?? 'en')
     return res
   }
 
-  if (!isNotSavedLang && shouldCheckLocale && noValidLocale) {
-    return NextResponse.redirect(
-      new URL(
-        `/${request.cookies.get('lang')?.value}${nextUrl.pathname}`,
-        request.url
-      )
-    )
+  if (tokenUrl !== null && shouldCheck) {
+    console.log('catched')
+    const res = NextResponse.redirect(new URL(`/${lang}/login`, url))
+    return res
   }
 
   return NextResponse.next()
+}
+
+function getLang ({ cookies, headers }: NextRequest): string {
+  const cookieLang = cookies.get('lang')
+  if (cookieLang) {
+    return cookieLang.value
+  }
+
+  // TODO: check from cookie before detecting
+  const accepts = headers.get('accept-language') || ''
+  // Omit country for now
+  const detected = accepts.split(',')[0].split('-')[0]
+
+  const validLocale = locales.includes(detected) ? detected : defaultLang
+
+  return validLocale
+}
+
+function IsValidToken ({ cookies }: NextRequest): boolean {
+  const tokenCookie = cookies.get('token')
+  if (tokenCookie) {
+    return true
+  }
+
+  return false
+}
+function ShouldCheck (nextUrl: NextURL): boolean {
+  return (
+    !nextUrl.pathname.startsWith('/_next') &&
+    !nextUrl.pathname.startsWith('/favicon')
+  )
+}
+
+function HasRedirectLang ({ nextUrl }: NextRequest): boolean {
+  const shouldCheckLocale = ShouldCheck(nextUrl)
+
+  const reqLocale = nextUrl.pathname.split('/')[1]
+  const noValidLocale = !locales.includes(reqLocale)
+
+  return shouldCheckLocale && noValidLocale
+}
+
+function GenerateTokenUrl (
+  lang: string,
+  isValidToken: boolean,
+  isSomeValidRoute: boolean
+): string | null {
+  if (!isValidToken && !isSomeValidRoute) {
+    return `/${lang}/login`
+  }
+
+  return null
 }
 
 export const config = {
