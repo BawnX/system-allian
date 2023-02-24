@@ -1,5 +1,7 @@
-import * as React from 'react'
+'use client'
+
 import Link from 'next/link'
+import { useLanguageContext } from '@components/atoms/languageContext'
 
 export interface ILink {
   text: string
@@ -10,7 +12,16 @@ export interface INavLink {
   linksArray: Array<ILink>
 }
 
-export const NavLink: React.FC<INavLink> = ({ linksArray }) => {
+export const NavLink = () => {
+  const { lang, text } = useLanguageContext()
+
+  const linksArray: Array<ILink> = [
+    {
+      text: text.navigation.pricing,
+      url: `/${lang}/pricing`
+    }
+  ]
+
   return (
     <nav className='md:ml-auto flex flex-wrap items-center text-base justify-center'>
       {linksArray.map((el, index) => (

@@ -1,4 +1,4 @@
-import { NavBar } from '@components/organisms/navbar'
+import { NavBarDashboard } from '@components/organisms/navbarDashboard'
 import { ReactNode } from 'react'
 
 export default function RootLayout ({
@@ -11,7 +11,7 @@ export default function RootLayout ({
   return (
     <div className='h-screen bg-light dark:bg-dark body-font font-balooChettan text-primary dark:text-light'>
       <header>
-        <NavBar />
+        <NavBarDashboard />
       </header>
 
       <main>

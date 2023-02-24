@@ -1,3 +1,4 @@
+import NavbarAuth from '@components/organisms/navbarAuth'
 import { ReactNode } from 'react'
 
 export default function AuthenticationLayout ({
@@ -7,5 +8,10 @@ export default function AuthenticationLayout ({
     children: ReactNode;
     params: { lang: string };
   }) {
-  return <section className='h-screen px-6'>{children}</section>
+  return (
+    <section className='h-screen px-6'>
+      <NavbarAuth />
+      {children}
+    </section>
+  )
 }

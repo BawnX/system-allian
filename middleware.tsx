@@ -24,8 +24,14 @@ export function middleware (request: NextRequest) {
 
   const tokenUrl = GenerateTokenUrl(lang, isValidToken, isSomeValidRoute)
 
+  if (isValidToken && !isSomeValidRoute && hasToRedirctLang) {
+    const res = NextResponse.redirect(new URL(`/${lang}/dashboard`, url))
+
+    return res
+  }
+
   if (tokenUrl !== null && hasToRedirctLang) {
-    const res = NextResponse.redirect(new URL(`/${lang}/login`, url))
+    const res = NextResponse.redirect(new URL(tokenUrl, url))
 
     res.cookies.set('lang', lang ?? 'en')
     return res
@@ -33,7 +39,7 @@ export function middleware (request: NextRequest) {
 
   if (tokenUrl !== null && shouldCheck) {
     console.log('catched')
-    const res = NextResponse.redirect(new URL(`/${lang}/login`, url))
+    const res = NextResponse.redirect(new URL(tokenUrl, url))
     return res
   }
 

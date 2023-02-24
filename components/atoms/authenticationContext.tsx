@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>
 }
 
-export const useAuthContext = () => {
+export const UseAuthContext = () => {
   const context = useContext(AuthContext) as AuthContextType
 
   if (!context) {

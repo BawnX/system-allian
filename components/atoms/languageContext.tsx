@@ -12,7 +12,15 @@ export type LangContextType = {
   lang: string;
   handleLang: (nextLang: string) => void;
 };
-
+const ClearHref = (href: string) => {
+  return href.split('/')
+    .map((el, index) => {
+      if (index > 3) { return el }
+      return null
+    })
+    .filter(el => el !== null)
+    .join('/')
+}
 const LanguageContext = createContext<LangContextType | null>(null)
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
@@ -26,10 +34,11 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
 
   const handleLang = (nextLang: string) => {
     if (lang !== nextLang) {
+      const cleared = ClearHref(window.location.href)
       setCookie('lang', nextLang)
       setLang(nextLang)
       setText(i18n[nextLang])
-      router.push(`/${nextLang}`)
+      router.push(`/${nextLang}/${cleared}`)
     }
   }
 
