@@ -1,6 +1,6 @@
-import { navigationType } from '..'
+import { elementType } from '..'
 
-const navigation: navigationType = {
+const navigation: elementType = {
   pricing: 'Pricing',
   logo: 'Allian',
   logout: 'Sign Out',

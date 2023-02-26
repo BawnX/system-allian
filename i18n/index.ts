@@ -1,11 +1,13 @@
 import navigationEs from './es/navigation'
 import navigationEn from './en/navigation'
+import authEs from './es/authentication'
+import authEn from './en/authentication'
 
-export type navigationType = {
+export type elementType = {
   [index: string]: string
 }
 export type translationsType = {
-  [index: string]: navigationType
+  [index: string]: elementType
 }
 
 export type i18nType = {
@@ -14,10 +16,12 @@ export type i18nType = {
 
 const i18n: i18nType = {
   es: {
-    navigation: navigationEs
+    navigation: navigationEs,
+    auth: authEs
   },
   en: {
-    navigation: navigationEn
+    navigation: navigationEn,
+    auth: authEn
   }
 }
 
