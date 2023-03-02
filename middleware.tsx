@@ -8,7 +8,9 @@ export const validRoutes = [
   '/es/login',
   '/en/login',
   '/es/register',
-  '/en/register'
+  '/en/register',
+  '/api/lang/auth',
+  '/api/lang/navegation'
 ]
 
 export function middleware (request: NextRequest) {
@@ -26,7 +28,6 @@ export function middleware (request: NextRequest) {
 
   if (isValidToken && !isSomeValidRoute && hasToRedirctLang) {
     const res = NextResponse.redirect(new URL(`/${lang}/dashboard`, url))
-
     return res
   }
 

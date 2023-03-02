@@ -7,7 +7,7 @@ const authEn: elementType = {
   password_input: 'Your password',
   password_example: '••••••••',
   remember: 'Remember me',
-  lost_passeword: 'Lost password?',
+  lost_password: 'Lost password?',
   singin_button: 'Login to your account',
   signup_button: 'Create account'
 }

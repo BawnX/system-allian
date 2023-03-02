@@ -7,7 +7,7 @@ const authEs: elementType = {
   password_input: 'Tu contraseña',
   password_example: '••••••••',
   remember: 'Recuerdame',
-  lost_passeword: 'has perdido tu contraseña?',
+  lost_password: 'has perdido tu contraseña?',
   singin_button: 'Ingresa a tu cuenta',
   signup_button: 'Registra tu cuenta'
 }

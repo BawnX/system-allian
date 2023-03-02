@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Logo } from '../icons/logo'
 
-export const LogoNavbar = ({ companyName }: {companyName: string}) => {
+export const LogoNavbar = ({ companyName }: { companyName: string }) => {
   return (
     <div className='flex title-font font-bold items-center'>
       <Logo
