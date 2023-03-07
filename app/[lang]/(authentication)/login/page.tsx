@@ -4,13 +4,14 @@ import Input from '@components/atoms/input'
 import { useLanguageContext } from '@components/atoms/languageContext'
 import LinkText from '@components/atoms/linkText'
 import TitleText from '@components/atoms/titleText'
+import FetchLang from '@services/common/fetchLang'
 import { PageProps } from '@services/common/typePage'
 import { FormEvent } from 'react'
 
-export default function Page ({ params }: PageProps) {
+export default async function Page ({ params }: PageProps) {
   const { handleLogin } = UseAuthContext()
   const { lang } = useLanguageContext()
-
+  await FetchLang({ lang, category: 'auth' })
   const login = (e: FormEvent) => {
     e.preventDefault()
     handleLogin(lang)
