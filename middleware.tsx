@@ -8,9 +8,7 @@ export const validRoutes = [
   '/es/login',
   '/en/login',
   '/es/register',
-  '/en/register',
-  '/api/lang/auth',
-  '/api/lang/navegation'
+  '/en/register'
 ]
 
 export function middleware (request: NextRequest) {
