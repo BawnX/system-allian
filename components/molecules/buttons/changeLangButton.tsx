@@ -11,6 +11,7 @@ export default function ChangeLangButton ({ langToChange }: {langToChange: strin
       isRounded
       size='normal'
       onClick={() => handleLang(langToChange)}
+      isTypeSubmit={false}
     >
       {langToChange.toUpperCase()}
     </Button>

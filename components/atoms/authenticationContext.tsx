@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const handleLogout = (lang: string) => {
     deleteCookie('token')
-    router.push(`/${lang}/login`)
+    router.push(`/${lang}/signin`)
   }
 
   const data = {

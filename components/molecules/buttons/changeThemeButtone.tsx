@@ -13,6 +13,7 @@ export default function ChangeThemeButton () {
       color='transparent'
       isRounded
       size='normal'
+      isTypeSubmit={false}
     >
       {
           mode === 'light'

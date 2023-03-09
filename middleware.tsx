@@ -5,10 +5,10 @@ import type { NextRequest } from 'next/server'
 const locales = ['es', 'en']
 const defaultLang = 'es'
 export const validRoutes = [
-  '/es/login',
-  '/en/login',
-  '/es/register',
-  '/en/register'
+  '/es/signin',
+  '/en/signin',
+  '/es/signup',
+  '/en/signup'
 ]
 
 export function middleware (request: NextRequest) {
@@ -37,7 +37,6 @@ export function middleware (request: NextRequest) {
   }
 
   if (tokenUrl !== null && shouldCheck) {
-    console.log('catched')
     const res = NextResponse.redirect(new URL(tokenUrl, url))
     return res
   }
@@ -91,7 +90,7 @@ function GenerateTokenUrl (
   isSomeValidRoute: boolean
 ): string | null {
   if (!isValidToken && !isSomeValidRoute) {
-    return `/${lang}/login`
+    return `/${lang}/signin`
   }
 
   return null

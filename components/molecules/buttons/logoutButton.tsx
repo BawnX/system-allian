@@ -13,6 +13,7 @@ export default function LogoutButton () {
       isRounded
       onClick={() => handleLogout(lang)}
       size='normal'
+      isTypeSubmit={false}
     >
       {text.navigation.logout}
     </Button>
