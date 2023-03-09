@@ -26,7 +26,7 @@ export default function LoginForm () {
       </div>
       <LoginButton />
       <div className='text-sm font-medium text-gray-500 dark:text-gray-300'>
-        <LinkText linkTo={`/${lang}/singup`} keyText='signup_button' />
+        <LinkText linkTo={`/${lang}/signup`} keyText='signup_button' />
       </div>
     </form>
   )
